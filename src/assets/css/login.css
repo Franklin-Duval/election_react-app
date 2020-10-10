@@ -1,0 +1,12 @@
+form{
+    width: 50%;
+    border: 1px solid black;
+    padding: 30px;
+    position: relative;
+	margin: 6% auto;
+	border-radius: 0px 60px;
+}
+
+p{
+    color: black;
+}

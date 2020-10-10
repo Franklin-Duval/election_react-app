@@ -1,0 +1,14 @@
+.navbar{
+	background-image: linear-gradient(to right, black, black);
+}
+
+.navbar-nav li{
+	padding: 0 10px;
+}
+
+.navbar-nav li a{
+	color: #fff !important;
+	font-weight: 600;
+	float: right;
+	text-align: left;
+}
