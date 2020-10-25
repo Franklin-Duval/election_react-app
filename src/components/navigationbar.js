@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from '../logo.svg'
+import user from '../assets/images/guest-128.png'
 import { Link } from 'react-router-dom'
 
 import '../assets/css/navigation.css'
@@ -7,30 +8,56 @@ import '../assets/css/navigation.css'
 export default function Navigation(){
     return(
         <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
-                <img src={logo} alt="logo" style={image} />
-                <p style={{marginTop: 10, marginLeft: 10, fontWeight: 'bold'}} >ASPY ELECTION</p>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navmenu" aria-controls="navmenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                
-                <div className="collapse navbar-collapse" id="navmenu">
-                    <ul className="navbar-nav ml-auto">
-                        <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show"><Link to="/" >Home</Link></li>
+            <Link to="/" className="row">
+                <img src={logo} alt="logo" style={styles.image} />
+                <p style={{marginTop: 2, marginLeft: 5, fontWeight: 'bold'}} >ASPY ELECTION</p>
+            </Link>
+            
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navmenu" aria-controls="navmenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            
 
-                        <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show"><Link to="/login" >Login</Link></li>
+            <div className="collapse navbar-collapse" id="navmenu">
+                <ul className="navbar-nav ml-auto">
+                    <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show"><Link to="/" >Home</Link></li>
 
-                        <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show"><Link to="/registration" >Registration</Link></li>
+                    <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show"><Link to="/login" >Login</Link></li>
 
-                        <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show"><Link to="/candidature" >Candidature</Link></li>
+                    <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show"><Link to="/registration" >Registration</Link></li>
 
-                    </ul>
-                </div>
-            </nav>
+                    <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show"><Link to="/candidature" >Candidature</Link></li>
+
+                </ul>
+                <Link to="/registration">
+                    <div style={styles.link} ><img src={user} alt="logo" style={styles.user} /></div>
+                </Link>
+
+            </div>
+        </nav>
     )
 }
 
-const image = {
-    height: 30,
-    width: 30
-}
+const styles = {
 
+    image:{
+        height: 30,
+        width: 30
+    },
+
+    user:{
+        height: 30,
+        width: 30,
+        padding: 5,
+        backgroundColor: "black",
+        borderRadius: 20,
+        
+    },
+
+    link:{
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 2
+    }
+    
+}
