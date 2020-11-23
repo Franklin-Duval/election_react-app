@@ -4,13 +4,16 @@
 
 .body{
 	height: 100%;
-	background-image: url('../images/hall.jpg');
+	background-image: url('../images/govote.jpg');
 	background-size: cover;
 	background-position: center;
+	opacity: 100%;
 }
 
 p{
 	color: white;
+	font-weight: bold;
+	opacity: 100%;
 }
 
 .footer{

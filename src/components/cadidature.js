@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom'
 
 import '../assets/css/login.css'
 import vote from '../assets/images/vote.jpg'
+import API_URL from '../assets/constants'
 
 export default class Candidature extends React.Component{
 
@@ -15,7 +16,7 @@ export default class Candidature extends React.Component{
         level: "",
         department: "",
         post: "",
-        image: "",
+        image: null,
         speech: "",
         agree: false,
         listDepartment: [],
@@ -30,7 +31,7 @@ export default class Candidature extends React.Component{
     }
 
     fetchDepartment = () => {
-        fetch('http://192.168.43.214:8000/department/')
+        fetch(API_URL + 'department/')
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({listDepartment: responseJson})
@@ -41,7 +42,7 @@ export default class Candidature extends React.Component{
     }
 
     fetchPost = () => {
-        fetch('http://192.168.43.214:8000/post/')
+        fetch(API_URL + 'post/')
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({listPost: responseJson})
@@ -53,7 +54,21 @@ export default class Candidature extends React.Component{
 
     handleSubmit = (event) => {
         event.preventDefault()
-        fetch('http://192.168.43.214:8000/candidate/', {
+        console.log(this.state)
+
+        /* let form_data = new FormData()
+        form_data.append('image', this.state.image, this.state.image.name)
+        form_data.append('matricule', this.state.matricule)
+        form_data.append('name', this.state.name)
+        form_data.append('surename', this.state.surename)
+        form_data.append('contact', this.state.contact)
+        form_data.append('email', this.state.email)
+        form_data.append('level', this.state.level)
+        form_data.append('department', this.state.department)
+        form_data.append('post', this.state.post)
+        form_data.append('speech', this.state.speech) */
+
+        fetch(API_URL + 'candidate/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -69,6 +84,7 @@ export default class Candidature extends React.Component{
                 department: this.state.department,
                 post: this.state.post,
                 speech: this.state.speech,
+                image: this.state.image
             })
 
         })
@@ -79,18 +95,22 @@ export default class Candidature extends React.Component{
                 alert("Registration Successful")
                 this.setState({finish: true})
             }
+            else if (responseJson["status"] === "FAILURE") {
+                alert("You are not registered as an Aspian. Contact the administrator")
+            }
             else {
-                let message = ""
                 if (responseJson["matricule"]){
-                    message = message + "This matricule has already been used. Verify again!"
+                    
+                    alert("This matricule has already been used. Verify again!")
                 }
-                if (responseJson["contact"]){
-                    message = message + "\nThis contact has already been used. Verify again!"
+                else if (responseJson["contact"]){
+                    
+                    alert("This contact has already been used. Verify again!")
                 }
-                if (responseJson["email"]){
-                    message = message + "\nThis email has already been used. Verify again!"
+                else if (responseJson["email"]){
+                    alert("This email has already been used. Verify again!")
                 }
-                alert("message: ", message)
+                
             }
 
         })
@@ -114,11 +134,11 @@ export default class Candidature extends React.Component{
         else
         {
             return(
-                <div>
+                <div style={{paddingBottom: 25}} className="bodys" >
                     <h3 className="text-center" >Candidature Form</h3>
-                    <form onSubmit={(event) => this.handleSubmit(event)} >
+                    <form onSubmit={(event) => this.handleSubmit(event)} style={{backgroundColor: "white"}} >
                         <div>
-                            <img src={vote} alt="" style={{height: 150, width: 150, borderRadius: 150, marginLeft: "15%", marginBottom: 20}} />
+                            <img src={vote} alt="" className="image" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="matricule">Matricule</label>
@@ -184,72 +204,68 @@ export default class Candidature extends React.Component{
                         
                         <div className="form-group">
                             <label htmlFor="level">Level</label>
-        
-                            <div className="dropdown" id="level">
-                                <button style={{width: "100%"}} className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span style={{marginRight: "87%"}}>Level</span>
-                                </button>
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a className="dropdown-item" href="#1" onClick={() => this.setState({level: 1})}>Level 1</a>
-                                    <a className="dropdown-item" href="#2" onClick={() => this.setState({level: 2})}>Level 2</a>
-                                    <a className="dropdown-item" href="#3" onClick={() => this.setState({level: 3})}>Level 3</a>
-                                    <a className="dropdown-item" href="#4" onClick={() => this.setState({level: 4})}>Level 4</a>
-                                    <a className="dropdown-item" href="#5" onClick={() => this.setState({level: 5})}>Level 5</a>
-                                </div>
-                            </div>
+                            <select className="form-control" id="level" onChange={(event) => this.setState({level: event.target.value})}>
+                                <option></option>
+                                <option value={1}>Level 1</option>
+                                <option value={2}>Level 2</option>
+                                <option value={3}>Level 3</option>
+                                <option value={4}>Level 4</option>
+                                <option value={5}>Level 5</option>
+                            </select>
                         </div>
-        
                             
                         <div className="form-group">
                             <label htmlFor="department">Department</label>
-        
-                            <div className="dropdown" id="department">
-                                <button style={{width: "100%"}} className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span style={{marginRight: "75%"}}>Department</span>
-                                </button>
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    {
-                                        this.state.listDepartment.map((item, index) => {
-                                            return(
-                                                <a key={index} className="dropdown-item" href="#1" onClick={() => {
-                                                    let str = "http://localhost:8000/department/" + item.id + "/"
-                                                    this.setState({department: str})
-                                                }}>
-                                                    {item.name}
-                                                </a>
-                                            )
-                                        })
-                                    }
-                                        
-                                </div>
-                            </div>
+                            <select className="form-control" id="department" onChange={(event) => this.setState({department: event.target.value})}>
+                                <option></option>
+                                {
+                                    this.state.listDepartment.map((item, index) => {
+                                        return(
+                                            <option 
+                                                key={index}
+                                                value={API_URL + "department/" + item.id + "/"}
+                                            >
+                                                {item.name}
+                                            </option>
+                                        )
+                                    })
+                                }
+                            </select>
                         </div>
 
                         <div className="form-group">
                             <label htmlFor="post">Post</label>
-        
-                            <div className="dropdown" id="post">
-                                <button style={{width: "100%"}} className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span style={{marginRight: "80%"}}>Post</span>
-                                </button>
-                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    {
-                                        this.state.listPost.map((item, index) => {
-                                            return(
-                                                <a key={index} className="dropdown-item" href="#1" onClick={() => {
-                                                    let str = "http://localhost:8000/post/" + item.id + "/"
-                                                    this.setState({post: str})
-                                                }}>
-                                                    {item.name}
-                                                </a>
-                                            )
-                                        })
-                                    }
-                                        
-                                </div>
-                            </div>
+                            <select className="form-control" id="post" onChange={(event) => this.setState({post: event.target.value})}>
+                                <option></option>
+                                {
+                                    this.state.listPost.map((item, index) => {
+                                        return(
+                                            <option 
+                                                key={index}
+                                                value={API_URL + "post/" + item.id + "/"}
+                                            >
+                                                {item.name}
+                                            </option>
+                                            
+                                        )
+                                    })
+                                }
+                            </select>
+                            
                         </div>
 
+                        {/* <div className="form-group">
+                            <label htmlFor="img">Select image : </label>
+                            <input
+                                type="file"
+                                id="img" name="img"
+                                accept="image/*"
+                                onChange={(event) => {
+                                    this.setState({image: event.target.value})
+                                }}
+                            />
+                        </div> */}
+                        
                         <div className="form-group">
                             <label htmlFor="speech">Speech</label>
                             
@@ -262,7 +278,6 @@ export default class Candidature extends React.Component{
                                 }}
                             >
                             </textarea>
-                            <small id="speechHelp" className="form-text text-muted">You can leave your speech blank and modify it later</small>
                         </div>
 
                         <div className="form-group form-check">
@@ -275,7 +290,9 @@ export default class Candidature extends React.Component{
                             />
                             <label className="form-check-label" htmlFor="check">I agree</label>
                         </div>
-                        <button type="submit" className="btn btn-primary" disabled={this.state.agree ? false : true} >Submit</button>
+                        <div style={{marginBottom: 30, marginTop: 15}} >
+                            <button type="submit" className="btn btn-primary col-md-12 text-center" disabled={this.state.agree ? false : true} >Submit</button>
+                        </div>
                     </form>
                 </div>
             )

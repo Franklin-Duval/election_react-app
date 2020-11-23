@@ -12,3 +12,38 @@
 	float: right;
 	text-align: left;
 }
+
+@media screen and (max-width: 991.5px){
+	.profile{
+		margin-left: 94%;
+		margin-right: 15px;
+	}
+}
+
+@media screen and (max-width: 845px){
+	.profile{
+		margin-left: 93.5%;
+		margin-right: 15px;
+	}
+}
+
+@media screen and (max-width: 640px){
+	.profile{
+		margin-left: 92%;
+		margin-right: 15px;
+	}
+}
+
+@media screen and (max-width: 450px){
+	.profile{
+		margin-left: 87%;
+		margin-right: 15px;
+	}
+}
+
+@media screen and (max-width: 360px){
+	.profile{
+		margin-left: 85%;
+		margin-right: 15px;
+	}
+}

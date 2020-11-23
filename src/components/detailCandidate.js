@@ -30,11 +30,11 @@ export default class Detail extends React.Component{
             <div className="container" style={{marginTop: 50, marginBottom: 50}}>
                 <h2 className="text-center">Candidate Information</h2>
 
-                <div className="row" style={{marginTop: 50}}>
-                    <img src={Image} alt="" style={{height: 300, width: 300, marginLeft: 30}} />
-                    <div style={{marginLeft: 30}}>
-                        <h2 style={{marginTop: 20}}>{this.candidate.name} </h2>
-                        <p style={styles.text}>Level: {this.candidate.level} </p>
+                <div className="row col-md-12" style={{marginTop: 50}}>
+                    <img src={this.candidate.image ? this.candidate.image : Image} alt="" style={{height: 300, width: 300, marginLeft: 0}} />
+                    <div style={{marginLeft: 10}}>
+                        <h2 style={{marginTop: 10}}>{this.candidate.name} </h2>
+                        <p style={styles.text}>Level {this.candidate.level} </p>
                         <p style={styles.text}>{this.state.department.name} </p>    
                         <p style={styles.text}>Email: {this.candidate.email} </p>
                         <p style={styles.text}>Contact: {this.candidate.contact} </p>

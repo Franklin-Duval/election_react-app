@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import API_URL from '../assets/constants'
 
 export default class Voting extends React.Component{
 
@@ -16,16 +17,15 @@ export default class Voting extends React.Component{
 
     componentDidMount(){
         this.fetchData()
-        console.log("id", this.id)
     }
 
     fetchData = () => {
-        fetch('http://192.168.43.214:8000/candidate/')
+        fetch(API_URL + 'candidate/')
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({listCandidates: responseJson})
 
-            fetch('http://192.168.43.214:8000/post/')
+            fetch(API_URL + 'post/')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({listPosts: responseJson})
@@ -67,23 +67,25 @@ export default class Voting extends React.Component{
             let user = JSON.parse(str)
             this.setState({user: user})
         }
-        
-        console.log(this.state)
+        else{
+            this.setState({login: true})
+        }
     }
 
     id = this.props.location.id
 
     handleSubmit = () => {
+        let max = 1
         if (this.id === undefined && this.state.user === ""){
             alert("Login to your account")
             this.setState({login: true})
         }
         else{
-            let str = "http://192.168.43.214:8000/voter/" + this.state.user.id + "/"
+            let str = API_URL + "voter/" + this.state.user.id + "/"
 
             this.state.votes.forEach((item) => {
                 console.log(str + " "+ item)
-                fetch('http://192.168.43.214:8000/vote/', {
+                fetch(API_URL + 'vote/', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
@@ -97,11 +99,11 @@ export default class Voting extends React.Component{
                 })
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    
-                    if (responseJson["status"] === "SUCCESS"){
+                    max++
+                    if (responseJson["status"] === "SUCCESS" && max===this.state.votes.length){
+                        console.log("sucess ", item)
                         alert("Thanks for voting")
                         this.setState({finish: true})
-                        
                     }
                 })
                 .catch((error) =>{
@@ -137,37 +139,34 @@ export default class Voting extends React.Component{
                             return(
                                 <div key={index} style={{marginTop: 20, marginBottom: 20}}>
                                     <h3>{item.post}</h3>
-
-                                    <div className="dropdown">
-                                        <button style={{width: "100%"}} className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span style={{marginRight: "80%"}}>{item.post} </span>
-                                        </button>
-                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            {
-                                                item.candidates.map((items, indexx) => {
-                                                    return(
-                                                        <div key={indexx} style={{margin: 20}}>
-                                                            <a className="dropdown-item" href="#1" onClick={() => {
-                                                                let str = "http://localhost:8000/candidate/" + items.id + "/"
-                                                                let temp = this.state.votes
-                                                                temp[index] = str
-                                                                this.setState({votes: temp})
-                                                            }}>
-                                                                {items.name + " " + items.surename}
-                                                            </a>
-                                                            
-                                                        </div>
-                                                    )
-                                                })
-                                            }
-                                        </div>
-                                    </div>
+                                    
+                                    <select
+                                        className="form-control"
+                                        onChange={(event) => {
+                                            let temp = this.state.votes
+                                            temp[index] = event.target.value
+                                            this.setState({votes: temp})
+                                        }}
+                                    >
+                                        <option></option>
+                                        {
+                                            item.candidates.map((items, indexx) => {
+                                                return(
+                                                    <option key={indexx} value={API_URL + "candidate/" + items.id + "/"}>
+                                                        {items.name + " " + items.surename}
+                                                    </option>
+                                                )
+                                            })
+                                        }
+                                    </select>
                                 </div>
                             )
                         })
                     }
 
-                    <button type="button" className="btn btn-primary" onClick={() => this.handleSubmit()}>Submit</button>
+                    <div style={{marginBottom: 30, marginTop: 30}}>
+                        <button type="button" className="btn btn-primary col-md-12 text-center" onClick={() => this.handleSubmit()}>Submit</button>
+                    </div>
 
                 </div>
             )

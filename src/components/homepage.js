@@ -31,9 +31,8 @@ function Home() {
             </div>
 
             <div className="container-fluid footer row">
-                <p style={{paddingTop: 10}} className="text-left col-md-4" >© 2020 All Rights Reserved</p>
-                <p style={{paddingTop: 10}} className="text-left col-md-4" ></p>
-                <p style={{paddingTop: 10}} className="text-right col-md-4" >Web Master</p>
+                <p style={{paddingTop: 10}} className="text-center col-md-6" >© 2020 All Rights Reserved</p>
+                <p style={{paddingTop: 10}} className="text-center col-md-6" >Web Master</p>
             </div>
 
         </div>
@@ -42,7 +41,7 @@ function Home() {
 
 const styles = {
     title:{
-        marginBottom: 50,
+        marginBottom: 60,
         fontSize: 40,
         fontFamily: "Times New Roman"
     },

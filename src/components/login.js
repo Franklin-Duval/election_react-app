@@ -6,6 +6,7 @@ import '../assets/css/login.css'
 import vote from '../assets/images/voting.jpg'
 import { connect } from 'react-redux'
 import { createUser } from '../store/actions/action'
+import API_URL from '../assets/constants'
 
 class Login extends React.Component{
 
@@ -21,7 +22,7 @@ class Login extends React.Component{
 
     handleSubmit = (event) => {
         event.preventDefault()
-        fetch('http://192.168.43.214:8000/auth-login/', {
+        fetch(API_URL + 'auth-login/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -81,11 +82,11 @@ class Login extends React.Component{
         else
         {
             return(
-                <div>
+                <div style={{paddingBottom: 25}} className="bodys" >
                     <h3 className="text-center" >Login Form</h3>
-                    <form onSubmit={(event) => this.handleSubmit(event)} >
+                    <form onSubmit={(event) => this.handleSubmit(event)} style={{backgroundColor: "white"}} >
                         <div>
-                            <img src={vote} alt="" style={{height: 150, width: 150, borderRadius: 150, marginLeft: "15%", marginBottom: 20}} />
+                            <img src={vote} alt="" className="image"/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="matricule">Matricule</label>
@@ -123,14 +124,12 @@ class Login extends React.Component{
                             />
                             <label className="form-check-label" htmlFor="check">I agree</label>
                         </div>
-                        <button type="submit" className="btn btn-primary" disabled={this.state.agree ? false : true} >Submit</button>
-                        <p style={{color: "black", marginLeft: "50%", fontSize: 14}} >No Account ? <Link to="/registration">Create an account</Link> </p>
+                        <div style={{marginBottom: 30, marginTop: 15}} >
+                            <button type="submit" className="btn btn-primary col-md-12 text-center" disabled={this.state.agree ? false : true} >Submit</button>
+                        </div>
+                        <p style={{color: "black", fontSize: 14}} >No Account ? <Link to="/registration">Create an account</Link> </p>
                     </form>
 
-                   {/*  <div>
-                        <p style={{color: "black"}} >No Account ? <Link to="/registration">Create an account</Link> </p>
-
-                    </div> */}
                 </div>
             )
         }

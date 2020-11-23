@@ -1,13 +1,27 @@
 form{
-    width: 300px;
+    width: 30%;
+    min-width: 330px;
     border: 1px solid black;
     padding: 30px;
     position: relative;
 	margin: 6% auto;
     border-radius: 0px 60px;
     margin-top: 100px;
+    margin-bottom: 100px;
 }
 
 p{
     color: black;
+}
+
+.image{
+    height: 150px;
+    width: 150px;
+    border-radius: 150px;
+    margin-left: 25%;
+    margin-bottom: 20px;
+}
+
+.bodys{
+    background-image: url("../images/voting.jpg");
 }

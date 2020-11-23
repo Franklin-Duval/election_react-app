@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
 import Image from '../assets/images/vote.jpg'
+import API_URL from '../assets/constants'
 
 export default class Candidates extends React.Component{
 
@@ -21,12 +22,12 @@ export default class Candidates extends React.Component{
     }
 
     fetchData = () => {
-        fetch('http://192.168.43.214:8000/candidate/')
+        fetch(API_URL + 'candidate/')
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({listCandidates: responseJson})
 
-            fetch('http://192.168.43.214:8000/post/')
+            fetch(API_URL + 'post/')
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({listPosts: responseJson})
@@ -42,7 +43,7 @@ export default class Candidates extends React.Component{
             console.log(error)
         })
         
-        fetch('http://192.168.43.214:8000/department/')
+        fetch(API_URL + 'department/')
         .then((response) => response.json())
         .then((responseJson) => {
             this.setState({departments: responseJson})
@@ -74,8 +75,7 @@ export default class Candidates extends React.Component{
             let user = JSON.parse(str)
             this.setState({user: user})
         }
-        
-        console.log(this.state)
+
     }
 
     name = this.props.location.name
@@ -118,13 +118,14 @@ export default class Candidates extends React.Component{
                                                                 contact: items.contact,
                                                                 email: items.email,
                                                                 speech: items.speech,
-                                                                post: item.post
+                                                                post: item.post,
+                                                                image: items.image
                                                             }
                                                         }}
                                                     
                                                     >
                                                         <div className="card" style={{width: "18rem"}}>
-                                                            <img src={Image} className="card-img-top" alt="" />
+                                                            <img src={items.image ? items.image : Image} className="card-img-top" alt="" style={{height: 220}} />
                                                             <div className="card-body">
                                                                 <h5 className="card-title">{items.name + " " + items.surename} </h5>
                                                                 <h6 className="card-text" style={{color: "black"}}>Level: {items.level} </h6>

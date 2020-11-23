@@ -12,6 +12,7 @@ import Candidates from './components/candidateList'
 import Detail from './components/detailCandidate'
 import Voting from './components/voting'
 import Results from './components/result'
+import Account from './components/account'
 import rootReducer from './store/store'
 import { createStore } from 'redux'
 
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/detail" component={Detail} />
                     <Route path="/voting" component={Voting} />
                     <Route path="/results" component={Results} />
+                    <Route path="/account" component={Account} />
                 </Switch>
             </Provider>
         </BrowserRouter>
