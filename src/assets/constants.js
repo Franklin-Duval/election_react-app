@@ -1,5 +1,5 @@
 
 
-const API_URL = "http://192.168.43.214:8000/"
+const API_URL = "https://aspyelection-api.herokuapp.com/"
 
 export default API_URL
