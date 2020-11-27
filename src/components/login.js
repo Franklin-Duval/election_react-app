@@ -84,6 +84,8 @@ class Login extends React.Component{
             return(
                 <div style={{paddingBottom: 25}} className="bodys" >
                     <h3 className="text-center" >Login Form</h3>
+                    <h3 className="text-center" >Login Form</h3>
+                    <h3 className="text-center" >Login Form</h3>
                     <form onSubmit={(event) => this.handleSubmit(event)} style={{backgroundColor: "white"}} >
                         <div>
                             <img src={vote} alt="" className="image"/>
