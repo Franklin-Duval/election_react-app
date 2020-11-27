@@ -4,7 +4,7 @@
 
 .body{
 	height: 100%;
-	background-image: url('../images/govote.jpg');
+	background-image: url('../images/vote.jpg');
 	background-size: cover;
 	background-position: center;
 	opacity: 100%;
@@ -13,11 +13,14 @@
 p{
 	color: white;
 	font-weight: bold;
-	opacity: 100%;
 }
 
 .footer{
 	background-image: linear-gradient(to right, black, black);
 /* 	position: fixed;
 	bottom: 0; */
+}
+
+.col-md-4{
+	opacity: 100%;
 }
