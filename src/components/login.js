@@ -4,11 +4,9 @@ import Cookies from 'js-cookie'
 
 import '../assets/css/login.css'
 import vote from '../assets/images/voting.jpg'
-import { connect } from 'react-redux'
-import { createUser } from '../store/actions/action'
 import API_URL from '../assets/constants'
 
-class Login extends React.Component{
+export default class Login extends React.Component{
 
     state = {
         matricule: "",
@@ -84,8 +82,6 @@ class Login extends React.Component{
             return(
                 <div style={{paddingBottom: 25}} className="bodys" >
                     <h3 className="text-center" >Login Form</h3>
-                    <h3 className="text-center" >Login Form</h3>
-                    <h3 className="text-center" >Login Form</h3>
                     <form onSubmit={(event) => this.handleSubmit(event)} style={{backgroundColor: "white"}} >
                         <div>
                             <img src={vote} alt="" className="image"/>
@@ -137,18 +133,3 @@ class Login extends React.Component{
         }
     }
 }
-
-
-const mapStateToProps = (state) => {
-    return {
-        userRegister : state.userReducer.user
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        reduxSaveUser : (user) => dispatch(createUser(user))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
